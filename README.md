@@ -55,13 +55,13 @@ SELECT
 	count(r.rental_id)
 FROM
   (SELECT
-	  MONTH(p.payment_date) mon,
+	  DATE_FORMAT(p.payment_date, '%m, %Y') mon,
 	  SUM(p.amount) summ
   FROM payment p 
-  GROUP BY MONTH(p.payment_date)
+  GROUP BY DATE_FORMAT(p.payment_date, '%m, %Y')
   ORDER BY summ DESC
   LIMIT 1) summs
-left join rental r on MONTH(r.rental_date)=summs.mon
+left join rental r on DATE_FORMAT(r.rental_date, '%m, %Y')=summs.mon
 GROUP BY monn;
 ```
 
